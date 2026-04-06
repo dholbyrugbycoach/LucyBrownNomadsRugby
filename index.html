@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Toronto RFC — Forward's Player Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #e8eaed;
+    --surface:  #ffffff;
+    --card:     #ffffff;
+    --border:   #d0d4da;
+    --shadow:   rgba(0,0,0,0.07);
+    --navy:     #1b3a5c;
+    --red:      #c0392b;
+    --text:     #1a1a2e;
+    --muted:    #6b7280;
+    --light:    #f3f4f6;
+    /* position group colours */
+    --prop:     #7b2d8b;   /* purple — props 1-3 16-18 */
+    --lock:     #1b3a5c;   /* navy  — locks 4-5 19     */
+    --brow:     #c0392b;   /* red   — back row 6-8 20  */
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+
+  /* ── HEADER ─────────────────────────────────────── */
+  header { display:flex; }
+  .hdr-left {
+    background: var(--red);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hdr-left::after {
+    content: 'TOR';
+    position: absolute;
+    right: -8px; bottom: -12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(255,255,255,0.07);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .logo-sq {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .hdr-club {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.08em;
+    color: #fff;
+    line-height: 1;
+    position: relative; z-index: 1;
+  }
+  .hdr-right {
+    background: var(--navy);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex: 1;
+  }
+  .hdr-right p { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .hdr-season { margin-left: auto; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.35); }
+
+  /* ── NAV ─────────────────────────────────────────── */
+  nav {
+    background: var(--navy);
+    border-bottom: 3px solid var(--red);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display:none; }
+  .nav-inner { display:flex; padding:0 32px; }
+  .tab-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    padding: 13px 18px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all .18s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.75); }
+  .tab-btn.active { color: #fff; border-bottom-color: var(--red); }
+  .tab-num { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: rgba(255,255,255,0.25); transition: color .18s; }
+  .tab-btn.active .tab-num { color: rgba(255,255,255,0.55); }
+
+  /* ── MAIN ────────────────────────────────────────── */
+  main { max-width: 1100px; margin: 0 auto; padding: 36px 32px; }
+  .section { display:none; }
+  .section.active { display:block; animation: fadeUp .28s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── SECTION HEADING ─────────────────────────────── */
+  .sec-h { margin-bottom: 26px; }
+  .sec-h h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    line-height: 1;
+    display: inline-block;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--red);
+  }
+  .sec-h h2 em { color: var(--red); font-style: normal; }
+  .sec-h p { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+  /* ── MATCH BANNER ────────────────────────────────── */
+  .match-banner {
+    background: var(--navy);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    display: flex;
+    box-shadow: 0 4px 20px rgba(27,58,92,0.2);
+  }
+  .mb-red-strip { width: 6px; background: var(--red); flex-shrink: 0; }
+  .mb-main { padding: 28px 32px; flex: 1; }
+  .mb-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .mb-opponent { font-family: 'Bebas Neue', sans-serif; font-size: 3.6rem; letter-spacing: 0.04em; color: #fff; line-height: 1; }
+  .mb-opponent em { color: var(--red); font-style: normal; }
+  .mb-meta { display: flex; gap: 36px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
+  .mb-item .val { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; }
+  .mb-item .key { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 1px; }
+  .mb-note-strip { background: var(--red); padding: 20px 24px; display: flex; align-items: center; min-width: 220px; max-width: 260px; }
+  .mb-note-strip p { font-size: 0.82rem; color: rgba(255,255,255,0.9); line-height: 1.55; font-style: italic; }
+  .mb-note-strip .note-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); margin-bottom: 6px; display: block; }
+
+  /* ── SQUAD LAYOUT ────────────────────────────────── */
+  .squad-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .squad-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.92rem;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .squad-list { display: flex; flex-direction: column; gap: 5px; }
+  .sq-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    box-shadow: 0 1px 4px var(--shadow);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .sq-row:hover { border-color: var(--red); box-shadow: 0 2px 8px rgba(192,57,43,0.12); }
+  /* Position group number badges */
+  .sq-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .sq-num.prop { background: var(--prop); }
+  .sq-num.lock { background: var(--lock); }
+  .sq-num.brow { background: var(--brow); }
+  .sq-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.06em; color: var(--text); }
+  .sq-pos  { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .sq-tag  { margin-left: auto; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 3px; background: rgba(27,58,92,0.08); color: var(--navy); border: 1px solid rgba(27,58,92,0.18); white-space: nowrap; }
+
+  /* ── POSITION COLOUR KEY ─────────────────────────── */
+  .pos-key { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; font-size: 0.74rem; }
+  .pk-item { display: flex; align-items: center; gap: 6px; }
+  .pk-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── CARD / WRAPPER ──────────────────────────────── */
+  .w {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .wt { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.12em; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .w-pill { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: rgba(27,58,92,0.08); border: 1px solid rgba(27,58,92,0.2); color: var(--navy); padding: 2px 8px; border-radius: 20px; }
+
+  /* ── FOUNDATIONS ─────────────────────────────────── */
+  .found-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; }
+  .fc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: box-shadow .18s;
+  }
+  .fc:hover { box-shadow: 0 4px 16px rgba(192,57,43,0.12); }
+  .fc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .fc-l { width: 34px; height: 34px; border-radius: 6px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+  .fc-t { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--navy); }
+  .fc-b { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+  .fc-tag { display: inline-block; margin-top: 8px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); color: var(--red); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; }
+
+  /* ── CALLS ───────────────────────────────────────── */
+  .calls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cb { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 8px; padding: 20px 22px; box-shadow: 0 2px 8px var(--shadow); }
+  .cb h3 { font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.12em; color: var(--navy); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .cr { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.83rem; }
+  .cr:last-child { border-bottom: none; }
+  .cr-d { color: var(--muted); }
+  .cr-c { background: var(--navy); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 3px; }
+  .cr-c.r { background: var(--red); }
+
+  /* MAPLE cancel buttons */
+  .maple-cancel { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .mc-btn { background: rgba(27,58,92,0.08); border: 1px solid rgba(27,58,92,0.2); color: var(--navy); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.14em; padding: 5px 16px; border-radius: 4px; }
+
+  /* ── MAUL ────────────────────────────────────────── */
+  .maul-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 12px; }
+  .mc-card { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 8px; padding: 18px; box-shadow: 0 2px 8px var(--shadow); }
+  .mc-role { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 6px; }
+  .mc-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+  /* ── FORMATION SELECTOR ──────────────────────────── */
+  .fmtn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .fmtn-btn {
+    background: var(--surface);
+    border: 2px solid var(--red);
+    color: var(--red);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .16s;
+  }
+  .fmtn-btn:hover { background: rgba(192,57,43,0.08); }
+  .fmtn-btn.active { background: var(--red); color: #fff; }
+
+  /* ── LINEOUT SVG WRAPPER ─────────────────────────── */
+  .lo-svg-wrap svg { border-radius: 8px; width: 100%; display: block; margin-bottom: 10px; }
+  .lo-summary { font-size: 0.82rem; color: var(--text); background: var(--light); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; line-height: 2.1; margin-bottom: 10px; }
+  .lo-change { font-size: 0.74rem; color: var(--red); margin-bottom: 8px; }
+  .lo-sub-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+  .lo-sub-btn { background: var(--light); border: 1px solid var(--border); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 13px; border-radius: 4px; cursor: pointer; transition: all .16s; }
+  .lo-sub-btn:hover { border-color: var(--red); color: var(--navy); }
+  .lo-sub-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+  .lo-section { display: none; }
+  .lo-section.active { display: block; }
+  .lo-size { display: none; }
+  .lo-size.active { display: block; }
+
+  /* ── DEFENCE ─────────────────────────────────────── */
+  .def-notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin-top: 18px; }
+  .dn { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 6px; padding: 14px 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.58; box-shadow: 0 1px 4px var(--shadow); }
+  .dn strong { display: block; color: var(--navy); margin-bottom: 3px; font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .colour-key { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; font-size: 0.75rem; }
+  .ck { display: flex; align-items: center; gap: 6px; }
+  .ck-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── SCRUM ───────────────────────────────────────── */
+  .scrum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 22px; }
+  .sp { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 2px 6px var(--shadow); }
+  .sp-i { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .sp h3 { font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.08em; color: var(--navy); margin-bottom: 5px; }
+  .sp p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── PODS TAB ────────────────────────────────────── */
+  .pods-intro { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 8px; padding: 16px 20px; margin-bottom: 22px; font-size: 0.86rem; color: var(--muted); line-height: 1.7; box-shadow: 0 2px 8px var(--shadow); }
+  .pods-intro strong { color: var(--navy); }
+  .pod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin-bottom: 22px; }
+  .pod-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px var(--shadow); }
+  .pod-card::before { content: ''; display: block; height: 4px; border-radius: 2px; margin-bottom: 14px; }
+  .pod-card.p1::before { background: var(--prop); }
+  .pod-card.p2::before { background: var(--lock); }
+  .pod-card.p3::before { background: var(--brow); }
+  .pod-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 6px; }
+  .pod-players { font-size: 0.82rem; color: var(--muted); line-height: 1.9; }
+  .pod-players span { display: block; }
+  .pod-role { margin-top: 10px; font-size: 0.74rem; color: var(--red); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Pod passing diagram */
+  .pod-passing { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 22px 24px; box-shadow: 0 2px 8px var(--shadow); margin-bottom: 20px; }
+  .pod-passing h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.12em; color: var(--navy); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .pass-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.82rem; flex-wrap: wrap; }
+  .pass-player { background: var(--navy); color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.1em; padding: 5px 12px; border-radius: 4px; }
+  .pass-player.prop { background: var(--prop); }
+  .pass-player.lock { background: var(--lock); }
+  .pass-player.brow { background: var(--brow); }
+  .pass-arrow { color: var(--border); font-size: 1.1rem; }
+  .pass-label { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+
+  /* ── MAPLE CODES ─────────────────────────────────── */
+  .maple-grid { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-end; margin-top: 14px; }
+  .maple-pos { text-align: center; flex: 1; min-width: 60px; }
+  .maple-letter { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--navy); line-height: 1; }
+  .maple-letter.dash { color: var(--border); }
+  .maple-label { font-size: 0.68rem; color: var(--muted); margin-top: 3px; }
+  .maple-note { margin-top: 14px; background: var(--light); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 0.8rem; color: var(--muted); }
+  .maple-note strong { color: var(--navy); }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media(max-width:700px){
+    header{flex-direction:column;}
+    .hdr-left,.hdr-right{width:100%;}
+    main{padding:20px 16px;}
+    .squad-layout{grid-template-columns:1fr;}
+    .calls-grid{grid-template-columns:1fr;}
+    .nav-inner{padding:0 12px;}
+    .match-banner{flex-direction:column;}
+    .mb-note-strip{max-width:100%;min-width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────── -->
+<header>
+  <div class="hdr-left">
+    <div class="logo-sq">TOR</div>
+    <div class="hdr-club">TORONTO RFC</div>
+  </div>
+  <div class="hdr-right">
+    <p>Forward's Player Guide</p>
+    <div class="hdr-season">2026–27</div>
+  </div>
+</header>
+
+<!-- ── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <button class="tab-btn active" onclick="st('gameday',this)"><span class="tab-num">01</span>Game Day</button>
+    <button class="tab-btn" onclick="st('foundations',this)"><span class="tab-num">02</span>Foundations</button>
+    <button class="tab-btn" onclick="st('triggers',this)"><span class="tab-num">03</span>LO Triggers</button>
+    <button class="tab-btn" onclick="st('maul',this)"><span class="tab-num">04</span>Maul & Drive</button>
+    <button class="tab-btn" onclick="st('structures',this)"><span class="tab-num">05</span>Structures</button>
+    <button class="tab-btn" onclick="st('pods',this)"><span class="tab-num">06</span>Pods</button>
+    <button class="tab-btn" onclick="st('defence',this)"><span class="tab-num">07</span>Defence</button>
+    <button class="tab-btn" onclick="st('scrum',this)"><span class="tab-num">08</span>Scrum</button>
+    <button class="tab-btn" onclick="st('restarts',this)"><span class="tab-num">09</span>Restarts</button>
+    <button class="tab-btn" onclick="st('breakdown',this)"><span class="tab-num">10</span>Breakdown</button>
+    <button class="tab-btn" onclick="st('opposition',this)"><span class="tab-num">11</span>Opposition</button>
+  </div>
+</nav>
+
+<!-- ── MAIN ────────────────────────────────────────────── -->
+<main>
+
+  <!-- 01 GAME DAY ──────────────────────────────────────── -->
+  <div class="section active" id="tab-gameday">
+
+    <div class="match-banner">
+      <div class="mb-red-strip"></div>
+      <div class="mb-main">
+        <div class="mb-tag">This Week · Kick Off</div>
+        <div class="mb-opponent">vs <em>OPPONENT NAME</em></div>
+        <div class="mb-meta">
+          <div class="mb-item"><div class="val">SAT 12 APR</div><div class="key">Match Date</div></div>
+          <div class="mb-item"><div class="val">AWAY</div><div class="key">Venue</div></div>
+          <div class="mb-item"><div class="val">15:00</div><div class="key">Kick Off</div></div>
+        </div>
+      </div>
+      <div class="mb-note-strip">
+        <div><span class="note-label">📋 Scouting Note</span><p>Opposition notes and key threats to watch this week.</p></div>
+      </div>
+    </div>
+
+    <!-- Position colour key -->
+    <div class="pos-key">
+      <div class="pk-item"><div class="pk-dot" style="background:var(--prop)"></div><span style="color:var(--prop)">Props — 1, 3, 16, 18</span></div>
+      <div class="pk-item"><div class="pk-dot" style="background:var(--lock)"></div><span style="color:var(--lock)">Locks — 4, 5, 19</span></div>
+      <div class="pk-item"><div class="pk-dot" style="background:var(--brow)"></div><span style="color:var(--brow)">Back Row — 6, 7, 8, 20</span></div>
+    </div>
+
+    <div class="squad-layout">
+      <!-- Starting XV -->
+      <div class="squad-section">
+        <h3>Starting Forwards</h3>
+        <div class="squad-list">
+          <div class="sq-row"><div class="sq-num prop">1</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Loosehead Prop</div></div></div>
+          <div class="sq-row"><div class="sq-num lock">2</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Hooker</div></div><span class="sq-tag">Caller A</span></div>
+          <div class="sq-row"><div class="sq-num prop">3</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Tighthead Prop</div></div></div>
+          <div class="sq-row"><div class="sq-num lock">4</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Lock</div></div><span class="sq-tag">Caller B</span></div>
+          <div class="sq-row"><div class="sq-num lock">5</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Lock</div></div></div>
+          <div class="sq-row"><div class="sq-num brow">6</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Blindside Flanker</div></div></div>
+          <div class="sq-row"><div class="sq-num brow">7</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Openside Flanker</div></div></div>
+          <div class="sq-row"><div class="sq-num brow">8</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Number 8</div></div></div>
+        </div>
+      </div>
+      <!-- Bench -->
+      <div class="squad-section">
+        <h3>Bench Forwards</h3>
+        <div class="squad-list">
+          <div class="sq-row"><div class="sq-num prop">16</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Prop</div></div></div>
+          <div class="sq-row"><div class="sq-num lock">17</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Hooker</div></div></div>
+          <div class="sq-row"><div class="sq-num prop">18</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Prop</div></div></div>
+          <div class="sq-row"><div class="sq-num lock">19</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Second Row</div></div><span class="sq-tag">Caller C</span></div>
+          <div class="sq-row"><div class="sq-num brow">20</div><div><div class="sq-name">PLAYER NAME</div><div class="sq-pos">Back Row</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lineout Positions -->
+    <div class="w">
+      <div class="wt">Lineout Positions <span class="w-pill">GAME DAY</span></div>
+      <div class="fmtn-row">
+        <button class="fmtn-btn active" onclick="showLoSize('h7',this)">7-Man</button>
+        <button class="fmtn-btn" onclick="showLoSize('h6',this)">6-Man</button>
+        <button class="fmtn-btn" onclick="showLoSize('h5',this)">5-Man</button>
+      </div>
+      <!-- 7-Man -->
+      <div id="h7" class="lo-size active">
+        <div class="lo-sub-btns">
+          <button class="lo-sub-btn active" onclick="showLoOption('h7','h7o1',this)">Starting</button>
+          <button class="lo-sub-btn" onclick="showLoOption('h7','h7o2',this)">Cover 1</button>
+          <button class="lo-sub-btn" onclick="showLoOption('h7','h7o3',this)">Finishers</button>
+        </div>
+        <div id="h7o1" class="lo-section active">
+          <svg viewBox="0 0 560 130" xmlns="http://www.w3.org/2000/svg">
+            <rect width="560" height="130" rx="8" fill="#1b3a5c"/>
+            <text x="280" y="15" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="rgba(255,255,255,0.3)" letter-spacing="2">7-MAN · STARTING · _ M A P L E _</text>
+            <line x1="50" y1="72" x2="530" y2="72" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+            <circle cx="28" cy="72" r="16" fill="#c0392b" stroke="#e74c3c" stroke-width="2"/>
+            <text x="28" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#fff">HOO</text>
+            <text x="28" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="7" fill="rgba(255,255,255,0.7)">THROW</text>
+            <circle cx="105" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="105" y="76" text-anchor="middle" font-family="Bebas Neue" font-size="11" fill="#fff">1</text>
+            <circle cx="175" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="175" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="#fff">POS</text>
+            <text x="175" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#ffd60a">M</text>
+            <circle cx="245" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="245" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="#fff">POS</text>
+            <text x="245" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#ffd60a">A</text>
+            <circle cx="315" cy="72" r="14" fill="#1a4a2a" stroke="#2ecc7a" stroke-width="2"/>
+            <text x="315" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="#fff">POS</text>
+            <text x="315" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#2ecc7a">P</text>
+            <circle cx="385" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="385" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="#fff">POS</text>
+            <text x="385" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#ffd60a">L</text>
+            <circle cx="455" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="455" y="68" text-anchor="middle" font-family="Bebas Neue" font-size="9" fill="#fff">POS</text>
+            <text x="455" y="78" text-anchor="middle" font-family="Bebas Neue" font-size="8" fill="#ffd60a">E</text>
+            <circle cx="520" cy="72" r="14" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="520" y="76" text-anchor="middle" font-family="Bebas Neue" font-size="11" fill="#fff">7</text>
+          </svg>
+          <div class="lo-summary">
+            <span style="color:var(--muted)">Throw·</span>HOO &nbsp;|&nbsp; <span style="color:var(--muted)">1·</span>POS1 &nbsp;|&nbsp; <span style="color:#b8860b">M·</span>POS2 &nbsp;|&nbsp; <span style="color:#b8860b">A·</span>POS3 &nbsp;|&nbsp; <span style="color:var(--lock)">P·</span>POS4 &nbsp;|&nbsp; <span style="color:#b8860b">L·</span>POS5 &nbsp;|&nbsp; <span style="color:#b8860b">E·</span>POS6 &nbsp;|&nbsp; <span style="color:var(--muted)">7·</span>POS7
+          </div>
+        </div>
+        <div id="h7o2" class="lo-section">
+          <div class="lo-summary">Cover 1 lineout positions go here — update weekly via config.</div>
+        </div>
+        <div id="h7o3" class="lo-section">
+          <div class="lo-summary">Finishers lineout positions go here — update weekly via config.</div>
+        </div>
+      </div>
+      <!-- 6-Man -->
+      <div id="h6" class="lo-size">
+        <div class="lo-summary">6-Man lineout positions load here.</div>
+      </div>
+      <!-- 5-Man -->
+      <div id="h5" class="lo-size">
+        <div class="lo-summary">5-Man lineout positions load here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 FOUNDATIONS ───────────────────────────────────── -->
+  <div class="section" id="tab-foundations">
+    <div class="sec-h"><h2>Our <em>Foundations</em></h2><p>The framework behind everything we do</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:8px;padding:14px 20px;margin-bottom:22px;font-size:0.84rem;color:var(--muted);line-height:1.7;box-shadow:0 2px 8px var(--shadow);">
+      <strong style="color:var(--navy);">Core Standard:</strong> Always operate with tempo — always quicker than the opposition. Fast to the lineout, fast jumps and lifts, fast delivery, fast to the next phase.
+    </div>
+    <div class="found-grid">
+      <div class="fc"><div class="fc-header"><div class="fc-l">T</div><div class="fc-t">Tempo</div></div><p class="fc-b">Always operate faster than the opposition. Fast to set, fast to jump, fast to deliver, fast to the next phase. Tempo is our weapon — never let it drop.</p><span class="fc-tag">Always Quicker</span></div>
+      <div class="fc"><div class="fc-header"><div class="fc-l">C</div><div class="fc-t">Call</div></div><p class="fc-b">Clear, loud calls every time. Assess the fast option first at every lineout. Always offer an option to the hooker at the very front. Take checkout calls immediately.</p><span class="fc-tag">Clear Communication</span></div>
+      <div class="fc"><div class="fc-header"><div class="fc-l">G</div><div class="fc-t">Gap</div></div><p class="fc-b">Set a big gap and maintain it. Manage this ourselves — do not rely on the referee. Jump and lift straight down our line. Never compromise the gap.</p><span class="fc-tag">Own The Space</span></div>
+      <div class="fc"><div class="fc-header"><div class="fc-l">L</div><div class="fc-t">Lift</div></div><p class="fc-b">Front lifters — thumbs on the inside, square to the jumper. Back lifters — drive feet towards the jumper, start under the glutes. Both lifters squeezed as tight as possible at the top. Finish every lift — place the jumper out of the line.</p><span class="fc-tag">Finish The Lift</span></div>
+      <div class="fc"><div class="fc-header"><div class="fc-l">J</div><div class="fc-t">Jump</div></div><p class="fc-b">Jump square to our lineout — avoid jumping into the line. Strong, straight body in the air. Keep legs together. Everybody works off the ball — dummy and move to distract the defence even when the ball is not coming to you.</p><span class="fc-tag">Square &amp; Strong</span></div>
+      <div class="fc"><div class="fc-header"><div class="fc-l">D</div><div class="fc-t">Deliver</div></div><p class="fc-b">Precise delivery every time. Damaging the opposition with dynamic deliveries stops them competing in the air. Every player protects 9 on a passing delivery. The lineout ends when the backs have the ball — finish all aspects with intent.</p><span class="fc-tag">Precision Always</span></div>
+    </div>
+  </div>
+
+  <!-- 03 LO TRIGGERS ───────────────────────────────────── -->
+  <div class="section" id="tab-triggers">
+    <div class="sec-h"><h2>LO <em>Triggers</em></h2><p>Movement triggers · Jumper calls · MAPLE position codes</p></div>
+    <div class="calls-grid">
+      <div class="cb">
+        <h3>Movement Starters</h3>
+        <div class="cr"><span class="cr-d">Last man in (on LO caller)</span><span class="cr-c">TRIP WIRE</span></div>
+        <div class="cr"><span class="cr-d">On a jumper's call</span><span class="cr-c">ON CALL</span></div>
+        <div class="cr"><span class="cr-d">Immediate movement on call</span><span class="cr-c">CHECK CALL</span></div>
+        <div class="cr"><span class="cr-d">Recall / Restart (ref issue)</span><span class="cr-c">SET</span></div>
+        <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:14px;margin-bottom:8px;">Check X = Cancel</div>
+        <div class="maple-cancel">
+          <span class="mc-btn">M</span><span class="mc-btn">A</span><span class="mc-btn">P</span><span class="mc-btn">L</span><span class="mc-btn">E</span>
+        </div>
+      </div>
+      <div class="cb">
+        <h3>Jumper to 9 Calls</h3>
+        <div class="cr"><span class="cr-d">Off the top</span><span class="cr-c r">SKY</span></div>
+        <div class="cr"><span class="cr-d">Down and pop</span><span class="cr-c r">BOUNCE</span></div>
+        <div class="cr"><span class="cr-d">Drive / maul</span><span class="cr-c r">PRE CALL/CLUB</span></div>
+        <div class="cr"><span class="cr-d">9 as a Forward</span><span class="cr-c r">PLUS 1</span></div>
+      </div>
+    </div>
+
+    <!-- MAPLE code system -->
+    <div class="w" style="margin-top:20px;">
+      <div class="wt">MAPLE Position Code System <span class="w-pill">MAPLE</span></div>
+      <div class="maple-grid">
+        <div class="maple-pos"><div class="maple-letter dash">—</div><div class="maple-label">First<br/>no code</div></div>
+        <div class="maple-pos"><div class="maple-letter">M</div><div class="maple-label">Pos 2</div></div>
+        <div class="maple-pos"><div class="maple-letter">A</div><div class="maple-label">Pos 3</div></div>
+        <div class="maple-pos"><div class="maple-letter">P</div><div class="maple-label">Pos 4<br/>(Jumper)</div></div>
+        <div class="maple-pos"><div class="maple-letter">L</div><div class="maple-label">Pos 5</div></div>
+        <div class="maple-pos"><div class="maple-letter">E</div><div class="maple-label">Pos 6</div></div>
+        <div class="maple-pos"><div class="maple-letter dash">—</div><div class="maple-label">Last<br/>no code</div></div>
+      </div>
+      <div class="maple-note">
+        <strong>Shortened lineouts follow the same rule</strong> — first and last positions never receive a code.<br/>
+        <span style="color:var(--muted)">5-man: _ M A P _ &nbsp;·&nbsp; 6-man: _ M A P L _ &nbsp;·&nbsp; 7-man: _ M A P L E _</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 MAUL & DRIVE ──────────────────────────────────── -->
+  <div class="section" id="tab-maul">
+    <div class="sec-h"><h2>Maul <em>& Drive</em></h2><p>Roles · Responsibilities · Execution</p></div>
+    <div class="maul-grid">
+      <div class="mc-card"><div class="mc-role">🎯 ARROW</div><p>The Jumper. Triple extension on landing. Launched upward — establish the anchor of the maul.</p></div>
+      <div class="mc-card"><div class="mc-role">⚔️ SPEARS</div><p>The Lifters. Turn on the way down and drive forward — the pointed attack that breaks the defence.</p></div>
+      <div class="mc-card"><div class="mc-role">🛡️ SHIELD</div><p>+1 receiver. Protects the ball, controls distribution. Right height, deliver cleanly.</p></div>
+      <div class="mc-card"><div class="mc-role">🔪 BLADES</div><p>Shoulder on to bums or into gaps. Cut through — create separation and distance between opposition.</p></div>
+      <div class="mc-card"><div class="mc-role">💥 AMMO</div><p>Fill space, keep the attack loaded. Anticipate changes of direction, bodies and breakaway.</p></div>
+    </div>
+    <div class="w">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;color:var(--navy);margin-bottom:8px;">★ Important Details</div>
+      <div style="font-size:.83rem;color:var(--muted);line-height:1.8;">
+        Attacking Maul — Screws closer to the touchline head <strong style="color:var(--text)">inside</strong>, further from the touchline head <strong style="color:var(--text)">out</strong>.<br/>
+        <span style="color:var(--red)">*</span> Hooker becomes a Screw when throwing to the front of the LO for speed and safety.
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 STRUCTURES ────────────────────────────────────── -->
+  <div class="section" id="tab-structures">
+    <div class="sec-h"><h2>Lineout <em>Structures</em></h2><p>MAPLE System · Attacking Shapes</p></div>
+    <div class="fmtn-row" id="fmtn-btns">
+      <button class="fmtn-btn active" onclick="showFmtn('f7',this)">7-Man MAPLE</button>
+      <button class="fmtn-btn" onclick="showFmtn('f7s',this)">7-Man Shapes</button>
+      <button class="fmtn-btn" onclick="showFmtn('f6',this)">6-Man MAPLE</button>
+      <button class="fmtn-btn" onclick="showFmtn('f6s',this)">6-Man Shapes</button>
+      <button class="fmtn-btn" onclick="showFmtn('f5',this)">5-Man MAPLE</button>
+      <button class="fmtn-btn" onclick="showFmtn('f5s',this)">5-Man Shapes</button>
+    </div>
+    <div id="f7" class="lo-size active">
+      <div class="w"><div class="wt">7-Man MAPLE Formation</div>
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:6px;">
+          <rect width="480" height="240" rx="6" fill="#1b3a5c"/>
+          <rect x="60" y="20" width="360" height="200" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+          <line x1="60" y1="120" x2="420" y2="120" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <circle cx="30" cy="120" r="15" fill="#c0392b" stroke="#e74c3c" stroke-width="2"/>
+          <text x="30" y="124" text-anchor="middle" font-family="Bebas Neue" font-size="12" fill="#fff">2</text>
+          <circle cx="240" cy="82" r="13" fill="#c0392b" stroke="#e74c3c" stroke-width="1.5"/>
+          <text x="240" y="86" text-anchor="middle" font-family="Bebas Neue" font-size="11" fill="#fff">9</text>
+          <g font-family="Bebas Neue" font-size="11">
+            <circle cx="130" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="130" y="124" text-anchor="middle" fill="#fff" font-size="10">1</text>
+            <circle cx="180" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="180" y="124" text-anchor="middle" fill="#fff" font-size="10">2</text>
+            <text x="180" y="143" text-anchor="middle" fill="#ffd60a" font-size="9">M</text>
+            <circle cx="220" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="220" y="124" text-anchor="middle" fill="#fff" font-size="10">3</text>
+            <text x="220" y="143" text-anchor="middle" fill="#ffd60a" font-size="9">A</text>
+            <circle cx="260" cy="120" r="13" fill="#1a4a2a" stroke="#2ecc7a" stroke-width="2"/>
+            <text x="260" y="124" text-anchor="middle" fill="#fff" font-size="10">4</text>
+            <text x="260" y="143" text-anchor="middle" fill="#2ecc7a" font-size="9">P</text>
+            <circle cx="300" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="300" y="124" text-anchor="middle" fill="#fff" font-size="10">5</text>
+            <text x="300" y="143" text-anchor="middle" fill="#ffd60a" font-size="9">L</text>
+            <circle cx="340" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="340" y="124" text-anchor="middle" fill="#fff" font-size="10">6</text>
+            <text x="340" y="143" text-anchor="middle" fill="#ffd60a" font-size="9">E</text>
+            <circle cx="380" cy="120" r="13" fill="#2c5282" stroke="#6fa3e8" stroke-width="1.5"/>
+            <text x="380" y="124" text-anchor="middle" fill="#fff" font-size="10">7</text>
+          </g>
+          <text x="240" y="18" text-anchor="middle" font-family="Bebas Neue" font-size="10" fill="rgba(255,255,255,0.35)" letter-spacing="2">ATTACKING · _ M A P L E _</text>
+        </svg>
+      </div>
+    </div>
+    <div id="f7s" class="lo-size"><div class="w"><div class="wt">7-Man Shapes</div><p style="color:var(--muted);font-size:.84rem;">7-Man shape grouping diagrams load here.</p></div></div>
+    <div id="f6" class="lo-size"><div class="w"><div class="wt">6-Man MAPLE Formation</div><p style="color:var(--muted);font-size:.84rem;">6-Man MAPLE diagram loads here.</p></div></div>
+    <div id="f6s" class="lo-size"><div class="w"><div class="wt">6-Man Shapes</div><p style="color:var(--muted);font-size:.84rem;">6-Man shape grouping diagrams load here.</p></div></div>
+    <div id="f5" class="lo-size"><div class="w"><div class="wt">5-Man MAPLE Formation</div><p style="color:var(--muted);font-size:.84rem;">5-Man MAPLE diagram loads here.</p></div></div>
+    <div id="f5s" class="lo-size"><div class="w"><div class="wt">5-Man Shapes</div><p style="color:var(--muted);font-size:.84rem;">5-Man shape grouping diagrams load here.</p></div></div>
+  </div>
+
+  <!-- 06 PODS ──────────────────────────────────────────── -->
+  <div class="section" id="tab-pods">
+    <div class="sec-h"><h2>Pod <em>System</em></h2><p>Pod groupings · Passing sequences · Roles</p></div>
+
+    <div class="pods-intro">
+      <strong>Pod rugby</strong> organises forwards into structured groups for ball carry and support. Each pod has a clear passing sequence and role — knowing your pod means knowing exactly where to be and what to do when the ball arrives.
+    </div>
+
+    <!-- Pod groupings -->
+    <div class="pod-grid">
+      <div class="pod-card p1">
+        <div class="pod-name">🐗 Pod 1 — Front Row</div>
+        <div class="pod-players">
+          <span>1 · Loosehead Prop</span>
+          <span>2 · Hooker</span>
+          <span>3 · Tighthead Prop</span>
+        </div>
+        <div class="pod-role">Power carry · Short drives · Support the breakdown</div>
+      </div>
+      <div class="pod-card p2">
+        <div class="pod-name">🗼 Pod 2 — Locks</div>
+        <div class="pod-players">
+          <span>4 · Lock</span>
+          <span>5 · Lock</span>
+        </div>
+        <div class="pod-role">Ball carry · Lineout anchor · Maul engine</div>
+      </div>
+      <div class="pod-card p3">
+        <div class="pod-name">⚡ Pod 3 — Back Row</div>
+        <div class="pod-players">
+          <span>6 · Blindside Flanker</span>
+          <span>7 · Openside Flanker</span>
+          <span>8 · Number 8</span>
+        </div>
+        <div class="pod-role">Ball in hand · Breakdown · Link to backs</div>
+      </div>
+    </div>
+
+    <!-- Passing sequences -->
+    <div class="pod-passing">
+      <h3>Pod Passing Sequences</h3>
+
+      <div style="font-size:.8rem;color:var(--muted);margin-bottom:14px;">Standard passing order within and between pods — know who is next before the ball arrives.</div>
+
+      <div class="pass-row">
+        <span style="font-size:.72rem;color:var(--muted);min-width:80px;letter-spacing:.08em;text-transform:uppercase;">Pod 1</span>
+        <span class="pass-player prop">1</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player prop">2</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player prop">3</span>
+        <span class="pass-label">· Front row carry sequence</span>
+      </div>
+      <div class="pass-row">
+        <span style="font-size:.72rem;color:var(--muted);min-width:80px;letter-spacing:.08em;text-transform:uppercase;">Pod 2</span>
+        <span class="pass-player lock">4</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player lock">5</span>
+        <span class="pass-label">· Lock carry sequence</span>
+      </div>
+      <div class="pass-row">
+        <span style="font-size:.72rem;color:var(--muted);min-width:80px;letter-spacing:.08em;text-transform:uppercase;">Pod 3</span>
+        <span class="pass-player brow">8</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player brow">6</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player brow">7</span>
+        <span class="pass-label">· Back row carry sequence</span>
+      </div>
+      <div class="pass-row" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+        <span style="font-size:.72rem;color:var(--muted);min-width:80px;letter-spacing:.08em;text-transform:uppercase;">Inter-Pod</span>
+        <span class="pass-player prop">P1</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player lock">P2</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player brow">P3</span>
+        <span class="pass-arrow">→</span>
+        <span class="pass-player" style="background:var(--navy)">9/10</span>
+        <span class="pass-label">· Full forward pod rotation</span>
+      </div>
+    </div>
+
+    <div class="w">
+      <div class="wt">Pod Groupings in Lineout</div>
+      <p style="font-size:.84rem;color:var(--muted);line-height:1.7;">Pod groupings directly mirror the lineout shape numbers. A <strong style="color:var(--navy)">2-3-2</strong> shape means Pod 1 at the front (2 players), Pod 2 in the middle (3 players), Pod 3 at the tail (2 players). When the lineout ball is won, players stay in pod structure for the first phase carry.</p>
+    </div>
+  </div>
+
+  <!-- 07 DEFENCE ───────────────────────────────────────── -->
+  <div class="section" id="tab-defence">
+    <div class="sec-h"><h2>Lineout <em>Defence</em></h2><p>Defensive shapes · Competition calls</p></div>
+    <div class="colour-key">
+      <div class="ck"><div class="ck-dot" style="background:#3498db"></div><span style="color:#3498db">Blue — Lifters / Driving</span></div>
+      <div class="ck"><div class="ck-dot" style="background:#27ae60"></div><span style="color:#27ae60">Green — Compete / Jump</span></div>
+      <div class="ck"><div class="ck-dot" style="background:#c0392b"></div><span style="color:#c0392b">Red — DSpace / Hinge</span></div>
+    </div>
+    <div class="w"><div class="wt">Defensive diagrams</div><p style="color:var(--muted);font-size:.84rem;">Defensive lineout shape SVG diagrams load here — Standard and Dynamic Hinge options.</p></div>
+    <!-- 6-stage defensive sequence -->
+    <div class="w" style="margin-top:20px;margin-bottom:20px;">
+      <div class="wt">Defensive Lineout — 6 Stage Sequence</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">1</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Get set first.</strong> Get the correct numbers as quickly as possible. Immediately set in the correct formation. Close the gap — squeeze their space. Get off the ground fast with jumpers as high as possible.</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">2</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Attack the delivery in the air.</strong> Jumper competes for the ball — if opposition catch it, attack their jumper's hands hard. Make them bring the ball to their chest so they cannot deliver. Lifters push our jumper into theirs. Try to make them as unsteady as possible at the top.</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">3</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Disrupt their platform on the way down.</strong> Jumper uses their body to hit into the opposition jumper as they come down. Take the opposition's space. Lifters work our jumper into theirs and lower body height quickly — TK Speed.</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">4</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Attack the jumper and lifters as they land.</strong> All players lower their body height quickly — TK Speed. Try to dislodge them from their lifters. Attack the arms of the jumper so they cannot deliver to their 9.</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">5</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Destroy their driving platform.</strong> Jumper attacks jumper. Lifters get inside the attacking lifters and split them away — lift their legs and drive them away from their jumper. If a lifter seals off, hit their lower back, pick a leg and twist them away.</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;">
+          <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;">6</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--navy);">Pressure their 9's delivery.</strong> If they deliver to their scrum half, attack him and make him rush his pass or kick. If they win ball at the front — one player from the middle can fight through the lineout to reach their 9.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-notes">
+      <div class="dn"><strong>9 — 5m Channel</strong>9 in the 5m channel — extra forward into the LO. Use on PLUS1 or heavy strike plays.</div>
+      <div class="dn"><strong>Normal Positioning</strong>9 to sweep, keep the inside or connect the hinge. Tail of the LO to support.</div>
+      <div class="dn"><strong>Protect Hinge</strong>Identify the target jumper. Protect the hinge — cover bad ball or overthrows.</div>
+      <div class="dn"><strong>One Goal — All In</strong>One clear objective. Everyone committed. Attack the floor or in the air.</div>
+    </div>
+  </div>
+
+  <!-- 08 SCRUM ─────────────────────────────────────────── -->
+  <div class="section" id="tab-scrum">
+    <div class="sec-h"><h2>Scrum <em>Principles</em></h2><p>Foundations & Timing</p></div>
+    <div class="scrum-grid">
+      <div class="sp"><span class="sp-i">⬇</span><h3>Lower Position</h3><p>100% of our scrums. No exceptions. Dominate the height battle.</p></div>
+      <div class="sp"><span class="sp-i">🏉</span><h3>Own Ball</h3><p>Clean strike on 2. Ball in, ball out on our terms.</p></div>
+      <div class="sp"><span class="sp-i">💥</span><h3>Defensive Fight</h3><p>Collective drive on strike through TightHead.</p></div>
+      <div class="sp"><span class="sp-i">🤝</span><h3>Bind & Lock</h3><p>Full arm bind. Lock hips. Drive from the legs.</p></div>
+    </div>
+    <div class="w">
+      <div class="wt">Key Scrum Principles</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="min-width:110px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--red);">SET LOW/TIGHT</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.6;">Set low and tight every engagement. Win the hit — this is the hooker's responsibility to initiate. Forward and down — engage and move opposition feet immediately.</div>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="min-width:110px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--red);">PUSH STRAIGHT</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.6;">Push straight is the default. If under pressure — stick together as one. Never let the opposition separate the front row. Vertical line is the key reference.</div>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="min-width:110px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--red);">VARY DELIVERY</div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.6;">Vary delivery speed every scrum — never be predictable. Drive scrum first, then deliver. Hook when ready — never on 9's call.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--prop);border-radius:8px;padding:18px;box-shadow:0 2px 6px var(--shadow);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;color:var(--prop);margin-bottom:10px;">1 · LOOSEHEAD</div>
+        <p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Push straight and hard after engagement to pressure their tighthead. If opposition pushes at an angle, bind tight with the hooker and stop them separating the front row. Maintain correct hip angle and posture when delivering channel 2.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--lock);border-radius:8px;padding:18px;box-shadow:0 2px 6px var(--shadow);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;color:var(--lock);margin-bottom:10px;">2 · HOOKER</div>
+        <p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Win the hit — this is your responsibility. Place your head in a favourable position to attack the opposition. If they try to turn the scrum, communicate immediately with props and push straight to stop them. The vertical axe is your reference point.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--prop);border-radius:8px;padding:18px;box-shadow:0 2px 6px var(--shadow);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;color:var(--prop);margin-bottom:10px;">3 · TIGHTHEAD</div>
+        <p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Most important role — keep the scrum. If opposition tries to get the ball out from channel 1, push their loosehead outward to make their outside foot go backwards. There are many ways to push — push inside, straight — read the situation and apply pressure to their 9's delivery.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 RESTARTS ──────────────────────────────────────── -->
+  <div class="section" id="tab-restarts">
+    <div class="sec-h"><h2>Restart <em>Roles</em></h2><p>Kick-off · Restart organisation</p></div>
+    <div class="w"><div class="wt">Restart content</div><p style="color:var(--muted);font-size:.84rem;">Restart roles and responsibilities to be added here.</p></div>
+  </div>
+
+  <!-- 10 OPPOSITION ────────────────────────────────────── -->
+  <div class="section" id="tab-opposition">
+    <div class="sec-h"><h2>Opposition <em>Notes</em></h2><p>Weekly scouting · Key threats</p></div>
+    <div class="w"><div class="wt">Opposition analysis</div><p style="color:var(--muted);font-size:.84rem;">Weekly opposition notes loaded here from config.</p></div>
+  </div>
+
+</main>
+
+<script>
+function st(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function showLoSize(id,btn){
+  document.querySelectorAll('.lo-size').forEach(s=>s.classList.remove('active'));
+  btn.closest('.fmtn-row').querySelectorAll('.fmtn-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function showLoOption(groupId,optId,btn){
+  const g=document.getElementById(groupId);
+  g.querySelectorAll('.lo-section').forEach(s=>s.classList.remove('active'));
+  g.querySelectorAll('.lo-sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(optId).classList.add('active');
+  btn.classList.add('active');
+}
+function showFmtn(id,btn){
+  document.querySelectorAll('#tab-structures .lo-size').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#fmtn-btns .fmtn-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
